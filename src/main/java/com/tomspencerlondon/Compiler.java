@@ -8,6 +8,7 @@ public class Compiler {
   public static void main(String[] args) throws IOException {
     lookahead = (char) System.in.read();
     try {
+      System.out.println(".globl + ");
       expression();
     } catch (ParseExpection e) {
       System.out.println(e.getMessage());
