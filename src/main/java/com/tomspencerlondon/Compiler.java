@@ -16,13 +16,26 @@ public class Compiler {
 
   private static void expression() throws IOException, ParseExpection {
     System.out.println("mov $" + getNum() + ", %eax");
+    match('+');
+    System.out.println("mov %eax, %ebx");
+    System.out.println("mov $" + getNum() + ", %eax");
+    System.out.println("add %ebx, %eax");
+  }
+
+  private static void match(char c) throws IOException, ParseExpection {
+    if (lookahead == c) {
+      lookahead = (char) System.in.read();
+    } else {
+      throw new ParseExpection("'" + c + "' expected.");
+    }
   }
 
   private static char getNum() throws IOException, ParseExpection {
     if (!Character.isDigit(lookahead)) {
       throw new ParseExpection("Integer expected.");
     }
-
-    return lookahead;
+    char result = lookahead;
+    lookahead = (char) System.in.read();
+    return result;
   }
 }
